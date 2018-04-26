@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -23,12 +22,23 @@ public class Mailbox {
     
     private static final String url = "http://api.guerrillamail.com/ajax.php";
     private static final Gson gson = new Gson();
-    
-    @Getter
+
+    public String getSessionIdCookie() {
+        return sessionIdCookie;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public AtomicBoolean getActive() {
+        return active;
+    }
+
     private String sessionIdCookie;
-    @Getter
+
     private String emailAddress;
-    @Getter
+
     private final AtomicBoolean active;
     
     private boolean firstCheck;
