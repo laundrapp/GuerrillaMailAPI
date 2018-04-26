@@ -1,0 +1,55 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'in.kyle.mail'
+version = '1.0-SNAPSHOT'
+
+description = """"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+
+repositories {
+    mavenCentral()
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.jsoup', name: 'jsoup', version:'1.8.3'
+    compile group: 'com.google.code.gson', name: 'gson', version:'2.4'
+    compile group: 'commons-io', name: 'commons-io', version:'2.4'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+    }
+}
+
+
+task translateJava(type:Exec) {
+    inputs.files sourceSets.main.allJava
+    outputs.files files((sourceSets.main.allJava).collect { i ->
+        i.collect { j ->
+            def name = projectDir.path + 'gen/objc/' + i.name
+            //def name = j.path.replace(i.srcDirs.iterator().next().path, 'src/gen/objc')
+            return [name.replace('.java', '.h'), name.replace('.java', '.m')]
+        }
+    }.flatten())
+
+
+    // the classpath is built from the runtime dependencies for the sourcesets ...
+    executable "${J2OBJC_HOME_LATEST}/j2objc"
+    //args '--prefixes', file('main/resources/prefixes.properties').path
+//    args '--mapping', file('mapping.properties').path
+    args '--doc-comments'
+    args '--nullability'
+    args '-d', file('gen/objc').path
+    args '-sourcepath', (sourceSets.main.allJava.srcDirs).join(':')
+    args '-classpath', sourceSets.main.runtimeClasspath.collect { it.absolutePath }.join(':')
+    args inputs.files
+}
+
