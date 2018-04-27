@@ -24,6 +24,7 @@ __attribute__((unused)) static IOSObjectArray *InKyleMailEmailListener__Annotati
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(emailReceivedWithInKyleMailEmailReceivedEvent:);
   #pragma clang diagnostic pop
   static const void *ptrTable[] = { "emailReceived", "LInKyleMailEmailReceivedEvent;", (void *)&InKyleMailEmailListener__Annotations$0 };

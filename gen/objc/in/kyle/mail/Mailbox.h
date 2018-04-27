@@ -13,6 +13,11 @@
 #endif
 #undef RESTRICT_InKyleMailMailbox
 
+#if __has_feature(nullability)
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
+
 #if !defined (InKyleMailMailbox_) && (INCLUDE_ALL_InKyleMailMailbox || defined(INCLUDE_InKyleMailMailbox))
 #define InKyleMailMailbox_
 
@@ -28,8 +33,8 @@
 
 #pragma mark Public
 
-- (instancetype)initWithLong:(jlong)checkInterval
-withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit;
+- (instancetype __nonnull)initWithLong:(jlong)checkInterval
+        withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit;
 
 - (void)checkMail;
 
@@ -49,7 +54,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit;
 
 // Disallowed inherited constructors, do not use.
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype __nonnull)init NS_UNAVAILABLE;
 
 @end
 
@@ -67,4 +72,8 @@ J2OBJC_TYPE_LITERAL_HEADER(InKyleMailMailbox)
 
 #endif
 
+
+#if __has_feature(nullability)
+#pragma clang diagnostic pop
+#endif
 #pragma pop_macro("INCLUDE_ALL_InKyleMailMailbox")

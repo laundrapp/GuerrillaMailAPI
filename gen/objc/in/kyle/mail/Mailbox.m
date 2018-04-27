@@ -120,8 +120,8 @@ J2OBJC_INITIALIZED_DEFN(InKyleMailMailbox)
   return active_;
 }
 
-- (instancetype)initWithLong:(jlong)checkInterval
-withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit {
+- (instancetype __nonnull)initWithLong:(jlong)checkInterval
+        withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit {
   InKyleMailMailbox_initWithLong_withJavaUtilConcurrentTimeUnit_(self, checkInterval, timeUnit);
   return self;
 }
@@ -204,6 +204,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)timeUnit {
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(getSessionIdCookie);
   methods[1].selector = @selector(getEmailAddress);
   methods[2].selector = @selector(getActive);

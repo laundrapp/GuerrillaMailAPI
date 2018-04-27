@@ -13,6 +13,11 @@
 #endif
 #undef RESTRICT_InKyleMailEmailReceivedEvent
 
+#if __has_feature(nullability)
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
+
 #if !defined (InKyleMailEmailReceivedEvent_) && (INCLUDE_ALL_InKyleMailEmailReceivedEvent || defined(INCLUDE_InKyleMailEmailReceivedEvent))
 #define InKyleMailEmailReceivedEvent_
 
@@ -25,7 +30,7 @@
 
 #pragma mark Public
 
-- (instancetype)initWithInKyleMailEmail:(InKyleMailEmail *)email;
+- (instancetype __nonnull)initWithInKyleMailEmail:(InKyleMailEmail *)email;
 
 - (jboolean)isEqual:(id)o;
 
@@ -35,7 +40,7 @@
 
 // Disallowed inherited constructors, do not use.
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype __nonnull)init NS_UNAVAILABLE;
 
 @end
 
@@ -51,4 +56,8 @@ J2OBJC_TYPE_LITERAL_HEADER(InKyleMailEmailReceivedEvent)
 
 #endif
 
+
+#if __has_feature(nullability)
+#pragma clang diagnostic pop
+#endif
 #pragma pop_macro("INCLUDE_ALL_InKyleMailEmailReceivedEvent")

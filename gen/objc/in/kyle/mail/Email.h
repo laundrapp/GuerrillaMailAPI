@@ -13,6 +13,11 @@
 #endif
 #undef RESTRICT_InKyleMailEmail
 
+#if __has_feature(nullability)
+#pragma clang diagnostic push
+#pragma GCC diagnostic ignored "-Wnullability-completeness"
+#endif
+
 #if !defined (InKyleMailEmail_) && (INCLUDE_ALL_InKyleMailEmail || defined(INCLUDE_InKyleMailEmail))
 #define InKyleMailEmail_
 
@@ -23,10 +28,10 @@
 
 #pragma mark Public
 
-- (instancetype)initWithInt:(jint)id_
-               withNSString:(NSString *)from
-               withNSString:(NSString *)subject
-               withNSString:(NSString *)content;
+- (instancetype __nonnull)initWithInt:(jint)id_
+                         withNSString:(NSString *)from
+                         withNSString:(NSString *)subject
+                         withNSString:(NSString *)content;
 
 - (jboolean)isEqual:(id)o;
 
@@ -42,7 +47,7 @@
 
 // Disallowed inherited constructors, do not use.
 
-- (instancetype)init NS_UNAVAILABLE;
+- (instancetype __nonnull)init NS_UNAVAILABLE;
 
 @end
 
@@ -58,4 +63,8 @@ J2OBJC_TYPE_LITERAL_HEADER(InKyleMailEmail)
 
 #endif
 
+
+#if __has_feature(nullability)
+#pragma clang diagnostic pop
+#endif
 #pragma pop_macro("INCLUDE_ALL_InKyleMailEmail")

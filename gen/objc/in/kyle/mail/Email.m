@@ -26,10 +26,10 @@ J2OBJC_FIELD_SETTER(InKyleMailEmail, content_, NSString *)
 
 @implementation InKyleMailEmail
 
-- (instancetype)initWithInt:(jint)id_
-               withNSString:(NSString *)from
-               withNSString:(NSString *)subject
-               withNSString:(NSString *)content {
+- (instancetype __nonnull)initWithInt:(jint)id_
+                         withNSString:(NSString *)from
+                         withNSString:(NSString *)subject
+                         withNSString:(NSString *)content {
   InKyleMailEmail_initWithInt_withNSString_withNSString_withNSString_(self, id_, from, subject, content);
   return self;
 }
@@ -80,6 +80,7 @@ J2OBJC_FIELD_SETTER(InKyleMailEmail, content_, NSString *)
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithInt:withNSString:withNSString:withNSString:);
   methods[1].selector = @selector(getId);
   methods[2].selector = @selector(getFrom);

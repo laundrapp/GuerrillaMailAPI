@@ -21,7 +21,7 @@ J2OBJC_FIELD_SETTER(InKyleMailEmailReceivedEvent, email_, InKyleMailEmail *)
 
 @implementation InKyleMailEmailReceivedEvent
 
-- (instancetype)initWithInKyleMailEmail:(InKyleMailEmail *)email {
+- (instancetype __nonnull)initWithInKyleMailEmail:(InKyleMailEmail *)email {
   InKyleMailEmailReceivedEvent_initWithInKyleMailEmail_(self, email);
   return self;
 }
@@ -55,6 +55,7 @@ J2OBJC_FIELD_SETTER(InKyleMailEmailReceivedEvent, email_, InKyleMailEmail *)
   };
   #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wobjc-multiple-method-names"
+  #pragma clang diagnostic ignored "-Wundeclared-selector"
   methods[0].selector = @selector(initWithInKyleMailEmail:);
   methods[1].selector = @selector(getEmail);
   methods[2].selector = @selector(isEqual:);
