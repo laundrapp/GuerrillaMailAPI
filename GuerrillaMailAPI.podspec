@@ -14,8 +14,8 @@ Pod::Spec.new do |s|
   s.exclude_files = 'gen/objc/*Test.{h,m}'
   s.resources = 'src/main/resources/*'
 
-  s.dependency 'JSoup'
-  s.dependency 'CommonsIo'
+  s.dependency 'JSoup', '1.8.3.J2ObjC2.1.1'
+  s.dependency 'CommonsIo', '2.4.J2ObjC2.1.1'
 
   s.public_header_files = 'gen/objc/**/*.h'
   s.header_mappings_dir = 'gen/objc/**'
