@@ -1,10 +1,9 @@
 package in.kyle.mail;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -21,7 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Mailbox {
     
     private static final String url = "http://api.guerrillamail.com/ajax.php";
-    private static final Gson gson = new Gson();
 
     public String getSessionIdCookie() {
         return sessionIdCookie;
@@ -85,47 +83,59 @@ public class Mailbox {
     }
     
     public String initEmailAddress() throws IOException {
-        String url = function("get_email_address");
-        JsonObject jsonObject = sendRequest(url);
-        return jsonObject.get("email_addr").getAsString();
+        try {
+            String url = function("get_email_address");
+            JSONObject jsonObject = sendRequest(url);
+            return jsonObject.getString("email_addr");
+        }catch(JSONException e) {
+            throw new IOException(e);
+        }
     }
     
     public void checkMail() throws IOException {
-        String url = function("check_email") + "&seq=0";
-        JsonObject jsonObject = sendRequest(url);
-        JsonArray list = jsonObject.getAsJsonArray("list");
-        
-        if (firstCheck) {
-            firstCheck = false;
-        } else {
-            for (JsonElement jsonElement : list) {
-                
-                JsonObject email = jsonElement.getAsJsonObject();
-                
-                int id = email.get("mail_id").getAsInt();
-                String from = email.get("mail_from").getAsString();
-                String subject = email.get("mail_subject").getAsString();
-                String content = email.get("mail_excerpt").getAsString();
-                
-                Email received = new Email(id, from, subject, content);
-                
-                EmailReceivedEvent emailReceivedEvent = new EmailReceivedEvent(received);
-                
-                synchronized (this) {
-                    emailListener.emailReceived(emailReceivedEvent);
+        try {
+            String url = function("check_email") + "&seq=0";
+            JSONObject jsonObject = sendRequest(url);
+            JSONArray list = jsonObject.getJSONArray("list");
+
+            if (firstCheck) {
+                firstCheck = false;
+            } else {
+                for (int i = 0; i < list.length(); i++) {
+
+                    JSONObject email = list.getJSONObject(i);
+
+                    int id = email.getInt("mail_id");
+                    String from = email.getString("mail_from");
+                    String subject = email.getString("mail_subject");
+                    String content = email.getString("mail_excerpt");
+
+                    Email received = new Email(id, from, subject, content);
+
+                    EmailReceivedEvent emailReceivedEvent = new EmailReceivedEvent(received);
+
+                    synchronized (this) {
+                        emailListener.emailReceived(emailReceivedEvent);
+                    }
                 }
             }
+        }catch(JSONException e) {
+            throw new IOException(e);
         }
     }
     
     public String setEmailAddress(String user) throws IOException {
-        String url = function("set_email_user") + "&email_user=" + user;
-        JsonObject jsonObject = sendRequest(url);
-        emailAddress = jsonObject.get("email_addr").getAsString();
-        return emailAddress;
+        try {
+            String url = function("set_email_user") + "&email_user=" + user;
+            JSONObject jsonObject = sendRequest(url);
+            emailAddress = jsonObject.getString("email_addr");
+            return emailAddress;
+        }catch(JSONException e) {
+            throw new IOException(e);
+        }
     }
     
-    private JsonObject sendRequest(String url) throws IOException {
+    private JSONObject sendRequest(String url) throws IOException {
         HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(url).openConnection();
         
         httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -146,7 +156,11 @@ public class Mailbox {
         
         StringWriter response = new StringWriter();
         IOUtils.copy(httpURLConnection.getInputStream(), response);
-        return gson.fromJson(response.toString(), JsonObject.class);
+        try {
+            return new JSONObject(response.toString());
+        }catch(JSONException e) {
+            throw new IOException(e);
+        }
     }
     
     private String function(String function) {

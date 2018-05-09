@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "GuerillaMailAPI"
-  s.version          = '1.0.J2ObjC2.1.1'
+  s.version          = '1.0.1J2ObjC2.1.1'
   s.author           = { "Marcus Smith" => "m_badenochsmith@yahoo.co.uk" }
   s.source           = { :git => "https://github.com/laundrapp/GuerrillaMailAPI.git" }
   s.summary          = "Version 1.8.3 update translated via J2ObjC 2.0.5"

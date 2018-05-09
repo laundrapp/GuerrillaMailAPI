@@ -14,10 +14,22 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
      maven { url "http://repo.maven.apache.org/maven2" }
+        maven {
+            credentials {
+                username 'marcus@laundrapp.com'
+                password 'buck1ngh4m'
+            }
+            authentication {
+                basic(BasicAuthentication)
+            }
+            url 'https://bitbucket.org/laundrapp/maven/raw/releases'
+        }
+
 }
 dependencies {
     compile group: 'org.jsoup', name: 'jsoup', version:'1.8.3'
-    compile group: 'com.google.code.gson', name: 'gson', version:'2.4'
+//    compile group: 'com.google.code.gson', name: 'gson', version:'2.4'
+    compile 'com.laundrapp:json:1.0.0'
     compile group: 'commons-io', name: 'commons-io', version:'2.4'
 }
 
